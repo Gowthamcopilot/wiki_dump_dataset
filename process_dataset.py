@@ -142,3 +142,4 @@ with open("progress.json", "w") as f:
         "completed_chunks": list(completed_chunks)
     }, f)
 
+Print("batch Process completed and json updated")
