@@ -106,6 +106,12 @@ Great for students and educators to experiment with LLMs and document parsing.
 Index the plain-text content with vector databases for use in retrieval-augmented generation (RAG) pipelines.
 
 
+## Citation
+
+This project uses data from the Wikipedia XML dump. Please cite the source as follows:
+
+Wikipedia contributors. (2025). Wikipedia: Database download. In Wikipedia, The Free Encyclopedia. Retrieved from https://dumps.wikimedia.org/enwiki/latest/
+
 
 ## 📄 License
 
