@@ -20,7 +20,7 @@ This repository contains a modular pipeline for transforming a raw 101GB Wikiped
 
 The original dataset is a large-scale processed version of the full English Wikipedia XML dump, enriched with structured fields including namespace (`ns`), ID, title, date, categories, entities, concepts, things, and clean plain text (with all templates, links, references, and infoboxes removed).
 
-Due to its large size (\~30 to 40 + GB when fully processed), we are hosting the dataset on the [🤗 Hugging Face Hub](https://huggingface.co/) for easy access, streaming, and integration with popular machine learning libraries.
+Due to its large size (\~30 to 40 + GB when fully processed), we are hosting the dataset on the [🤗 Hugging Face Hub]([https://huggingface.co/](https://huggingface.co/datasets/gowthamgoli/wikimedia_dataset)) for easy access, streaming, and integration with popular machine learning libraries.
 
 **🚚 Upload Plan:**
 We are uploading the dataset incrementally in daily batches to ensure stable access and reproducibility. If you're an early user, please check back regularly for newly available chunks. Each upload will be versioned and documented.
