@@ -10,6 +10,9 @@ import json
 with open("file_list.json", "r") as f:
     url_list = json.load(f)
 
+with open("completed_list.json", "r") as f:
+    completed_list = set(json.load(f))
+
 HEADERS_TO_REMOVE = [
     "See also", "References", "External links", "Further reading", "Notes", "Sources"
 ]
@@ -65,7 +68,9 @@ def remove_tables(text):
 # Main processing
 data = []
 i = 0
-for url in url_list:
+while url_list:
+    url = url_list[0]
+
     start_time = time.time()
     tree = ET.parse(url)
     root = tree.getroot()
@@ -73,12 +78,17 @@ for url in url_list:
 
     for page in tqdm(pages, desc=f"Processing chunk_{url[60:]}", unit="page"):
         ns = page.find('ns').text
+        if ns is None:
+            continue
         if ns == '0':
             bytes_ = int(page.find('revision/text').attrib.get('bytes', 0))
             if bytes_ > 1000:
                 id_ = page.find('id').text
                 title = page.find('title').text
-                text = page.find('revision/text').text
+                text = page.find('revision/text')
+                if text is None or text.text is None:
+                    continue
+                text = text.text
                 date = page.find('revision/timestamp').text[:10]
 
                 # Extract categories from full text before trimming
@@ -101,7 +111,8 @@ for url in url_list:
                     'categories': categories,
                     'entities': entities
                 })
-    file_processed = url_list.pop(0)           
+    file_processed = url_list.pop(0) 
+    completed_list.add(file_processed)          
     i = i + 1
     end_time = time.time()
     print(f"Chunk {file_processed} processed in {end_time - start_time:.2f} seconds")
@@ -117,6 +128,6 @@ print("------------- Saved successfully -----------")
 with open("file_list.json", "w") as f:
     json.dump(url_list, f)
 
-
-
+with open("completed_list.json", "w") as f:
+    json.dump(list(completed_list), f)
 
