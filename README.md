@@ -52,9 +52,9 @@ Sample output is shown in `sample_output.csv`.
 
 ## 📦 Sample Output
 
-| id    | title       | categories             | entities          | plain\_text                  |
-| ----- | ----------- | ---------------------- | ----------------- | ---------------------------- |
-| 12345 | Alan Turing | British mathematicians | Alan Turing, WWII | Alan Turing was a pioneer... |
+| id    | title       | plain_text             | cetegories        | entities                     | date        |
+| ----- | ----------- | ---------------------- | ----------------- | ---------------------------- |-------------|
+| 12345 | Alan Turing | British mathematicians | Alan Turing, WWII | Alan Turing was a pioneer... |12-02-2018   |
 | ...   | ...         | ...                    | ...               | ...                          |
 
 ---
@@ -66,29 +66,10 @@ Sample output is shown in `sample_output.csv`.
 * `regex`
 * `pandas`
 * `spacy`
-* `dbpedia-spotlight` (optional, for concept linking)
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## ☁️ Cloud Usage
-
-This pipeline is optimized for Google Cloud:
-
-* Use `rclone` to upload/download chunked data
-* Parallelize chunk processing across VMs for efficiency
-
----
+* `mwparserfromhell`
+* `xml`
 
 ## 📄 License
 
 MIT License. See `LICENSE` for details.
 
----
-
-Would you like me to generate the `requirements.txt` and example `sample_output.csv` based on assumed fields?
