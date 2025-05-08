@@ -11,6 +11,7 @@ This repository contains a modular pipeline for transforming a raw 101GB Wikiped
 ├── validate_chunks.py              # Validates structural integrity of each XML chunk
 ├── process_dataset.py             # Cleans and extracts data into structured format
 ├── sample_output.csv              # Example of the final processed dataset
+├── list_files.json                # in it you will store all chunks orginal paths so track the non processed chunks this json will automatically updated after each batch it will delete those file path which are processsed this one you should create it before you use same process as me
 └── README.md
 ```
 
