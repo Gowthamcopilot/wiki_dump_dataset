@@ -69,7 +69,7 @@ Sample output is shown in `sample_output.csv`.
 * `mwparserfromhell`
 * `xml`
 
-🚀 Applications and Use Cases
+##🚀 Applications and Use Cases
 This dataset is a cleaned and enriched version of the Wikipedia dump, optimized for NLP model training and semantic analysis. It can power a wide range of AI, research, and educational projects.
 
 🔬 NLP Research & Model Training
