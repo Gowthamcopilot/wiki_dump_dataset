@@ -6,12 +6,16 @@ from tqdm import tqdm
 import time
 import json
 
+batch_size = 3
 
-with open("file_list.json", "r") as f:
+with open("url_list.json", "r") as f:
     url_list = json.load(f)
 
-with open("completed_list.json", "r") as f:
-    completed_list = set(json.load(f))
+with open("progress.json", "r") as f:
+    progress = json.load(f)
+
+no_of_batches_processed = progress.get("no_of_batches_processed", 0)
+completed_chunks = set(progress.get("completed_chunks", []))
 
 HEADERS_TO_REMOVE = [
     "See also", "References", "External links", "Further reading", "Notes", "Sources"
@@ -76,7 +80,7 @@ while url_list:
     root = tree.getroot()
     pages = root.findall('.//page')
 
-    for page in tqdm(pages, desc=f"Processing chunk_{url[60:]}", unit="page"):
+    for page in tqdm(pages, desc=f"Processing chunk_{url[66:]}", unit="page"):
         ns = page.find('ns').text
         if ns is None:
             continue
@@ -85,10 +89,10 @@ while url_list:
             if bytes_ > 1000:
                 id_ = page.find('id').text
                 title = page.find('title').text
-                text = page.find('revision/text')
-                if text is None or text.text is None:
+                text_node = page.find('revision/text')
+                if text_node is None or text_node.text is None:
                     continue
-                text = text.text
+                text = text_node.text
                 date = page.find('revision/timestamp').text[:10]
 
                 # Extract categories from full text before trimming
@@ -111,23 +115,30 @@ while url_list:
                     'categories': categories,
                     'entities': entities
                 })
+
     file_processed = url_list.pop(0) 
-    completed_list.add(file_processed)          
+    completed_chunks.add(file_processed) 
+
     i = i + 1
     end_time = time.time()
     print(f"Chunk {file_processed} processed in {end_time - start_time:.2f} seconds")
-    if i % 30 == 0:
+    if i % batch_size == 0:
         con = input("do you want to continue to next batch : ")
         if con.lower() == "n":
             break
 
 df = pd.DataFrame(data)
-df.to_parquet('clean_wiki_test_02.parquet', engine='pyarrow')
-print("------------- Saved successfully -----------")
+df.to_parquet(f'clean_wiki_test_{no_of_batches_processed + 1}.parquet', engine='pyarrow')
+no_of_batches_processed += 1
 
-with open("file_list.json", "w") as f:
+# update file_list
+with open("url_list.json", "w") as f:
     json.dump(url_list, f)
 
-with open("completed_list.json", "w") as f:
-    json.dump(list(completed_list), f)
+# Save progress
+with open("progress.json", "w") as f:
+    json.dump({
+        "no_of_batches_processed": no_of_batches_processed,
+        "completed_chunks": list(completed_chunks)
+    }, f)
 
