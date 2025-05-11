@@ -32,5 +32,4 @@ def validate_chunks_in_directory(output_dir):
         chunk_path = os.path.join(output_dir, chunk_file)
         validate_chunk(chunk_path)
 
-# Example Usage:
 validate_chunks_in_directory('C:/Users/gowth/Documents/rag_datasets/wikidump/chunk_Folder')
