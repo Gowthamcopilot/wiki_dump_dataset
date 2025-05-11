@@ -37,7 +37,7 @@ def simple_page_chunker(input_path, output_dir, pages_per_chunk=1000):
 
     print(f"✅ Done. Total chunks: {chunk_id}")
 
-# Example Usage:
+
 simple_page_chunker(input_path="C:/Users/gowth/Documents/rag_datasets/wikidump/enwiki-latest-pages-articles.xml",
                      output_dir='C:/Users/gowth/Documents/rag_datasets/wikidump/chunk_Folder', 
                      pages_per_chunk=2000)
